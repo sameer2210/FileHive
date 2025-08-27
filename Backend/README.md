@@ -2,59 +2,46 @@
 
 Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
 
+## deployment link base url
+
+[ Backend deployment ](https://drive-ai.onrender.com/)
+
 ## Features
 
 User authentication (Signup, Login, JWT-based sessions)
-
 Create nested folders (like Google Drive)
-
 Upload images (with Multer + Cloudinary)
-
 User-specific access → users can only access their own folders & images
-
 Search images by name
-
 Secure routes with authentication middleware
-
 Centralized error handling with middleware
-
 MongoDB integration with Mongoose
 
 ## Tech Stack
 
 Node.js + Express.js
-
 MongoDB + Mongoose
-
 Cloudinary (for image storage)
-
 JWT (for authentication)
-
 Multer (for file handling)
-
 dotenv, cors, morgan, cookie-parser
 
 📌 API Routes
 🔑 Auth
 
 POST /api/auth/signup → Register a new user
-
 POST /api/auth/login → Login user
 
 ## Folders
 
 POST /api/folders → Create a folder (nested supported)
-
 GET /api/folders → Get all folders of logged-in user
-
 DELETE /api/folders/:id → Delete a folder
 
 🖼️ Images
 
 POST /api/images/upload → Upload an image to Cloudinary
-
 GET /api/images/search?query= → Search images by name
-
 DELETE /api/images/:id → Delete an image
 
 📂 Backend Folder Structure

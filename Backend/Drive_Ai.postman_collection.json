@@ -98,6 +98,7 @@
               "mode": "formdata",
               "formdata": [
                 { "key": "name", "value": "sample-image", "type": "text" },
+                { "key": "folderId", "value": "<FOLDER_ID>", "type": "text" },
                 { "key": "image", "type": "file", "src": "" }
               ]
             }
@@ -124,13 +125,7 @@
     }
   ],
   "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:5000/api"
-    },
-    {
-      "key": "jwt",
-      "value": ""
-    }
+    { "key": "base_url", "value": "http://localhost:5000/api" },
+    { "key": "jwt", "value": "" }
   ]
 }
