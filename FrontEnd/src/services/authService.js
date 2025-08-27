@@ -15,14 +15,17 @@ class AuthService {
     try {
       const response = await axiosInstance.post(API_ENDPOINTS.SIGNUP, userData);
 
-      if (response.data.success) {
+      // Backend returns _id, name, email, token directly (no success wrapper)
+      const { _id, name, email, token } = response.data;
+
+      if (token) {
         return {
-          user: response.data.user,
-          token: response.data.token,
+          user: { _id, name, email },
+          token: token,
         };
       }
 
-      throw new Error(response.data.message || 'Signup failed');
+      throw new Error('Signup failed - no token received');
     } catch (error) {
       this.handleError(error, 'Signup failed');
     }
@@ -33,17 +36,20 @@ class AuthService {
     try {
       const response = await axiosInstance.post(API_ENDPOINTS.LOGIN, credentials);
 
-      if (response.data.success) {
+      // Backend returns _id, name, email, token directly (no success wrapper)
+      const { _id, name, email, token } = response.data;
+
+      if (token) {
         // Set the auth token for future requests
-        this.setAuthToken(response.data.token);
+        this.setAuthToken(token);
 
         return {
-          user: response.data.user,
-          token: response.data.token,
+          user: { _id, name, email }, // Build user object
+          token: token,
         };
       }
 
-      throw new Error(response.data.message || 'Login failed');
+      throw new Error('Login failed - no token received');
     } catch (error) {
       this.handleError(error, 'Login failed');
     }
