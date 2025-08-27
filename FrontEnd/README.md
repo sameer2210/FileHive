@@ -81,7 +81,6 @@ Clean UI with Tailwind
 
 Easy-to-understand auth, folders, images feature separation
 
-
 ## FrontEnd folder Stracture
 
 FrontEnd/
@@ -89,52 +88,50 @@ FrontEnd/
 │── package.json
 │── vite.config.js
 │── src/
-│   │── main.jsx
-│   │── App.jsx
-│   │── index.css
-│   │
-│   ├── assets/              # Static images, icons, svgs
-│   │
-│   ├── components/          # Reusable UI components
-│   │   ├── Navbar.jsx
-│   │   ├── FolderCard.jsx
-│   │   ├── ImageCard.jsx
-│   │   └── Loader.jsx
-│   │
-│   ├── features/            # Feature based structure (Redux slices / hooks)
-│   │   ├── auth/
-│   │   │   ├── LoginForm.jsx
-│   │   │   ├── SignupForm.jsx
-│   │   │   └── authSlice.js
-│   │   │
-│   │   ├── folders/
-│   │   │   ├── FolderList.jsx
-│   │   │   ├── CreateFolder.jsx
-│   │   │   └── folderSlice.js
-│   │   │
-│   │   ├── images/
-│   │   │   ├── UploadImage.jsx
-│   │   │   ├── SearchImages.jsx
-│   │   │   └── imageSlice.js
-│   │
-│   ├── layouts/             # Common layouts
-│   │   ├── AuthLayout.jsx
-│   │   └── MainLayout.jsx
-│   │
-│   ├── pages/               # Full pages
-│   │   ├── Home.jsx
-│   │   ├── Dashboard.jsx
-│   │   ├── Login.jsx
-│   │   ├── Signup.jsx
-│   │   └── NotFound.jsx
-│   │
-│   ├── redux/               # Redux store config
-│   │   └── store.js
-│   │
-│   ├── services/            # API calls (Axios)
-│   │   ├── authService.js
-│   │   ├── folderService.js
-│   │   └── imageService.js
-│   │
-│   └── utils/               # Helper functions
-│       └── axiosInstance.js
+│ │── main.jsx
+│ │── App.jsx
+│ │── index.css
+│ │
+│ ├── assets/ # Static images, icons, svgs
+│ │
+│ ├── components/ # Reusable UI components
+│ │ ├── Navbar.jsx
+│ │ ├── FolderCard.jsx
+│ │ ├── ImageCard.jsx
+│ │ └── Loader.jsx
+│ │
+│ ├── features/ # Feature based structure (Redux slices / hooks)
+│ │ ├── auth/
+│ │ │ └── authSlice.js
+│ │ │
+│ │ ├── folders/
+│ │ │ ├── FolderList.jsx
+│ │ │ ├── CreateFolder.jsx
+│ │ │ └── folderSlice.js
+│ │ │
+│ │ ├── images/
+│ │ │ ├── UploadImage.jsx
+│ │ │ ├── SearchImages.jsx
+│ │ │ └── imageSlice.js
+│ │
+│ ├── layouts/ # Common layouts
+│ │ ├── AuthLayout.jsx
+│ │ └── MainLayout.jsx
+│ │
+│ ├── pages/ # Full pages
+│ │ ├── Home.jsx
+│ │ ├── Dashboard.jsx
+│ │ ├── Login.jsx
+│ │ ├── Signup.jsx
+│ │ └── NotFound.jsx
+│ │
+│ ├── redux/ # Redux store config
+│ │ └── store.js
+│ │
+│ ├── services/ # API calls (Axios)
+│ │ ├── authService.js
+│ │ ├── folderService.js
+│ │ └── imageService.js
+│ │
+│ └── utils/ # Helper functions
+│ └── axiosInstance.js
