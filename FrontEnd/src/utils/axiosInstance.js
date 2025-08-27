@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
   },
 });
 
-// Request interceptor: Add token and basic logging
+// Request interceptor: Add token, full URL logging
 axiosInstance.interceptors.request.use(
   config => {
     const token = localStorage.getItem('token');
@@ -17,24 +17,41 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     if (import.meta.env.DEV) {
-      console.log(` ${config.method?.toUpperCase()} ${config.url}`);
+      console.log(
+        ` ${config.method?.toUpperCase()} ${config.baseURL}${config.url} | Data:`,
+        config.data
+      ); // Full URL + request body for debugging
     }
     return config;
   },
   error => Promise.reject(error)
 );
 
-// Response interceptor: Basic error handling
+// Response interceptor: Enhanced error logging
 axiosInstance.interceptors.response.use(
   response => {
     if (import.meta.env.DEV) {
-      console.log(` ${response.config.method?.toUpperCase()} ${response.config.url}`);
+      console.log(
+        ` ${response.config.method?.toUpperCase()} ${response.config.baseURL}${
+          response.config.url
+        } | Status: ${response.status} | Data:`,
+        response.data
+      );
     }
     return response;
   },
   error => {
     if (import.meta.env.DEV) {
-      console.error(` Error:`, error.response?.data || error.message);
+      console.error(
+        ` Error on ${error.config?.method?.toUpperCase()} ${error.config?.baseURL}${
+          error.config?.url
+        }:`,
+        {
+          status: error.response?.status,
+          data: error.response?.data,
+          message: error.message,
+        }
+      );
     }
 
     if (error.response?.status === 401) {
@@ -49,7 +66,7 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-// Helpers
+// Helpers (unchanged)
 export const setAuthToken = token => {
   if (token) {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
