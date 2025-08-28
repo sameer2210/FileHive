@@ -1,12 +1,14 @@
 // src/features/images/UploadImage.jsx
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { uploadImage } from './imageSlice';
 
 export default function UploadImage({ onImageUploaded, folderId = null }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [selectedFolderId, setSelectedFolderId] = useState(folderId || '');
   const fileInputRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -26,26 +28,24 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
 
   const handleUpload = async () => {
     if (!selectedFile) return;
+    if (!selectedFolderId) {
+      alert('Please choose a folder to upload into.');
+      return;
+    }
 
     setUploading(true);
     try {
       const formData = new FormData();
       formData.append('image', selectedFile);
-      if (folderId) {
-        formData.append('folderId', folderId);
-      }
+      formData.append('name', selectedFile.name); // <-- REQUIRED
+      formData.append('folderId', selectedFolderId);
 
-      // Replace this with your actual upload API call
-      // const result = await dispatch(uploadImage(formData));
-
-      // For now, just simulate success
-      setTimeout(() => {
+      const resultAction = await dispatch(uploadImage(formData));
+      if (uploadImage.fulfilled.match(resultAction)) {
         handleClose();
-        if (onImageUploaded) {
-          onImageUploaded();
-        }
-        setUploading(false);
-      }, 1500);
+        if (onImageUploaded) onImageUploaded();
+      }
+      setUploading(false);
     } catch (error) {
       console.error('Upload failed:', error);
       setUploading(false);
@@ -56,6 +56,7 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
     setIsModalOpen(false);
     setSelectedFile(null);
     setPreview(null);
+    setSelectedFolderId(folderId || '');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -198,10 +199,14 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
               {/* Folder Selection */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Upload to Folder (Optional)
+                  Upload to Folder
                 </label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                  <option value="">Root (No folder)</option>
+                <select
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  value={selectedFolderId}
+                  onChange={e => setSelectedFolderId(e.target.value)}
+                >
+                  <option value="">Select a folder</option>
                   {folders.map(folder => (
                     <option key={folder._id} value={folder._id}>
                       {folder.name}
@@ -222,7 +227,7 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
                 </button>
                 <button
                   onClick={handleUpload}
-                  disabled={!selectedFile || uploading}
+                  disabled={!selectedFile || !selectedFolderId || uploading}
                   className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   {uploading ? (

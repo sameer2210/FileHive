@@ -8,7 +8,7 @@ const imageService = {
    */
   async uploadImage(formData) {
     try {
-      const response = await axiosInstance.post('/api/images/upload', formData, {
+      const response = await axiosInstance.post('/images/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -28,7 +28,7 @@ const imageService = {
   async searchImages(query) {
     try {
       const response = await axiosInstance.get(
-        `/api/images/search?query=${encodeURIComponent(query)}`
+        `/images/search?query=${encodeURIComponent(query)}`
       );
       return response.data;
     } catch (error) {
@@ -44,7 +44,7 @@ const imageService = {
    */
   async getImages(folderId = null) {
     try {
-      const url = folderId ? `/api/images?folderId=${folderId}` : '/api/images';
+      const url = folderId ? `/images?folderId=${folderId}` : '/images';
 
       const response = await axiosInstance.get(url);
       return response.data;
@@ -61,7 +61,7 @@ const imageService = {
    */
   async getImagesByFolder(folderId) {
     try {
-      const response = await axiosInstance.get(`/api/images/folder/${folderId}`);
+      const response = await axiosInstance.get(`/images/folder/${folderId}`);
       return response.data;
     } catch (error) {
       console.error('Get images by folder error:', error);
@@ -76,7 +76,7 @@ const imageService = {
    */
   async deleteImage(imageId) {
     try {
-      const response = await axiosInstance.delete(`/api/images/${imageId}`);
+      const response = await axiosInstance.delete(`/images/${imageId}`);
       return response.data;
     } catch (error) {
       console.error('Delete image error:', error);
@@ -92,7 +92,7 @@ const imageService = {
    */
   async updateImage(imageId, updateData) {
     try {
-      const response = await axiosInstance.put(`/api/images/${imageId}`, updateData);
+      const response = await axiosInstance.put(`/images/${imageId}`, updateData);
       return response.data;
     } catch (error) {
       console.error('Update image error:', error);
@@ -107,7 +107,7 @@ const imageService = {
    */
   async getImageById(imageId) {
     try {
-      const response = await axiosInstance.get(`/api/images/${imageId}`);
+      const response = await axiosInstance.get(`/images/${imageId}`);
       return response.data;
     } catch (error) {
       console.error('Get image by ID error:', error);
@@ -123,7 +123,7 @@ const imageService = {
    */
   async moveImage(imageId, newFolderId) {
     try {
-      const response = await axiosInstance.put(`/api/images/${imageId}/move`, {
+      const response = await axiosInstance.put(`/images/${imageId}/move`, {
         folderId: newFolderId,
       });
       return response.data;
@@ -140,7 +140,7 @@ const imageService = {
    */
   async getRecentImages(limit = 10) {
     try {
-      const response = await axiosInstance.get(`/api/images/recent?limit=${limit}`);
+      const response = await axiosInstance.get(`/images/recent?limit=${limit}`);
       return response.data;
     } catch (error) {
       console.error('Get recent images error:', error);
@@ -154,7 +154,7 @@ const imageService = {
    */
   async getImageStats() {
     try {
-      const response = await axiosInstance.get('/api/images/stats');
+      const response = await axiosInstance.get('/images/stats');
       return response.data;
     } catch (error) {
       console.error('Get image stats error:', error);

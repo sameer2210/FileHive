@@ -7,7 +7,7 @@ export const fetchImages = createAsyncThunk(
   'images/fetchImages',
   async (params = {}, { rejectWithValue }) => {
     try {
-      const response = await imageService.getAllImages(params);
+      const response = await imageService.getImages(params.folderId);
       return response;
     } catch (error) {
       const message = error.response?.data?.message || error.message || 'Failed to fetch images';
@@ -230,7 +230,7 @@ const imageSlice = createSlice({
       })
       .addCase(searchImages.fulfilled, (state, action) => {
         state.isSearching = false;
-        state.searchResults = action.payload.images || [];
+        state.searchResults = action.payload || [];
       })
       .addCase(searchImages.rejected, (state, action) => {
         state.isSearching = false;
