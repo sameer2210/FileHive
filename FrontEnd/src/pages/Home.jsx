@@ -40,7 +40,7 @@ export default function Home() {
       <section className="text-center py-20">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Welcome to <span className="text-blue-600">Drive_Ai</span>
+            Welcome to <span className="text-blue-600">FileHive</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             Your personal cloud storage solution. Upload, organize, and manage your images with

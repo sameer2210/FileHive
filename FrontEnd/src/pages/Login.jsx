@@ -62,8 +62,8 @@ export default function Login() {
   const isFormValid = isValid && formValues.email && formValues.password;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-cyan-50 px-4 sm:px-6 lg:px-6">
-      <div className="max-w-md w-full space-y-3">
+    <div className="max-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-cyan-50 py-6 px-4 sm:px-6 lg:px-6">
+      <div className="max-w-md w-full space-y-6 font-mono">
         {/* Login Form */}
         <div className=" rounded  px-4">
           <div className="text-center">
@@ -74,7 +74,7 @@ export default function Login() {
             <p className="text-sm text-gray-600">Sign in to your Drive_AI account</p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-6 font-mono">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-6 ">
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -95,7 +95,7 @@ export default function Login() {
                       message: 'Please enter a valid email address',
                     },
                   })}
-                  className={`block w-full pl-10 pr-3 py-2 border-b-3 rounded focus:outline-none duration-200${
+                  className={`block w-full pl-10 pr-3 py-2 border-b-3 border-gray-400 hover:border-gray-500 rounded focus:outline-none duration-200${
                     errors.email
                       ? 'border-red-300 bg-red-50'
                       : 'border-gray-300 bg-white hover:border-gray-400'
@@ -130,7 +130,7 @@ export default function Login() {
                       message: 'Password must be at least 6 characters',
                     },
                   })}
-                  className={`block w-full pl-10 pr-3 py-2 border-b-3 rounded focus:outline-none duration-200${
+                  className={`block w-full pl-10 pr-3 py-2 border-b-3 rounded border-gray-400 hover:border-gray-500 focus:outline-none duration-200${
                     errors.password
                       ? 'border-red-300 bg-red-50'
                       : 'border-gray-300 bg-white hover:border-gray-400'

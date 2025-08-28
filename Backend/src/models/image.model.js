@@ -1,16 +1,69 @@
+// import mongoose from 'mongoose';
+
+// const schema = new mongoose.Schema(
+//   {
+//     name: { type: String, required: true, trim: true, index: true },
+//     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+//     folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder', required: true },
+//     public_id: { type: String, required: true }, // Cloudinary id
+//     url: { type: String, required: true },
+//     size: { type: Number },
+//     contentType: { type: String },
+//   },
+//   { timestamps: true }
+// );
+
+// export default mongoose.model('Image', schema);
+
+// src/models/image.model.js
 import mongoose from 'mongoose';
 
-const schema = new mongoose.Schema(
+const imageSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, trim: true, index: true },
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-    folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder', required: true },
-    public_id: { type: String, required: true }, // Cloudinary id
-    url: { type: String, required: true },
-    size: { type: Number },
-    contentType: { type: String },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+    cloudinaryId: {
+      type: String,
+      required: true,
+    },
+    folder: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Folder',
+      required: true,
+      index: true,
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
+    size: {
+      type: Number,
+    },
+    mimeType: {
+      type: String,
+    },
+    tags: [
+      {
+        type: String,
+      },
+    ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model('Image', schema);
+// Index for efficient searching
+imageSchema.index({ owner: 1, name: 'text' });
+imageSchema.index({ owner: 1, folder: 1 });
+
+export default mongoose.model('Image', imageSchema);
