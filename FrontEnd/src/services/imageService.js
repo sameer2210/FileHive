@@ -1,4 +1,3 @@
-// src/services/imageService.js
 import axiosInstance from '../utils/axiosInstance.js';
 
 const imageService = {

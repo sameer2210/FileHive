@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';

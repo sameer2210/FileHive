@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Suspense, lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -7,7 +6,6 @@ import Loader from './components/Loader.jsx';
 import AuthLayout from './layouts/AuthLayout.jsx';
 import MainLayout from './layouts/MainLayout.jsx';
 
-// Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
 const Login = lazy(() => import('./pages/Login.jsx'));

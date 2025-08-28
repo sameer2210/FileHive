@@ -1,14 +1,11 @@
-// src/layouts/MainLayout.jsx
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Navbar.jsx';
 
 export default function MainLayout() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Global Navbar */}
       <Navbar />
 
-      {/* Page Content */}
       <main className="flex-1 container mx-auto px-4 py-6">
         <Outlet />
       </main>

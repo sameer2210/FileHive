@@ -1,7 +1,7 @@
 import multer from 'multer';
-import Image from '../models/image.model.js';
 import Folder from '../models/folder.model.js';
-import { uploadStream, deleteByPublicId } from '../utils/cloudinary.js';
+import Image from '../models/image.model.js';
+import { deleteByPublicId, uploadStream } from '../utils/cloudinary.js';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
@@ -33,10 +33,10 @@ export const uploadImage = async (req, res, next) => {
       name,
       owner: req.user._id,
       folder: folder._id,
-      public_id: result.public_id,
+      cloudinaryId: result.public_id,
       url: result.secure_url,
       size: req.file.size,
-      contentType: req.file.mimetype,
+      mimeType: req.file.mimetype,
     });
 
     res.status(201).json(doc);
@@ -67,7 +67,7 @@ export const deleteImage = async (req, res, next) => {
       throw new Error('Image not found');
     }
 
-    await deleteByPublicId(img.public_id).catch(() => null);
+    await deleteByPublicId(img.cloudinaryId).catch(() => null);
     await img.deleteOne();
     res.json({ message: 'Image deleted' });
   } catch (e) {

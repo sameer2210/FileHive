@@ -1,11 +1,11 @@
 import express from 'express';
-import { protect } from '../middleware/auth.middleware.js';
 import {
-  uploadMiddleware,
-  uploadImage,
-  searchImages,
   deleteImage,
+  searchImages,
+  uploadImage,
+  uploadMiddleware,
 } from '../controllers/image.controller.js';
+import { protect } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 router.use(protect);

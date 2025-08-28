@@ -1,96 +1,3 @@
-// import Folder from '../models/folder.model.js';
-
-// const buildPath = async (name, parentId) => {
-//   if (!parentId) return `/${name}`;
-//   const parent = await Folder.findById(parentId);
-//   const parentPath = parent?.path || '/';
-//   return `${parentPath}/${name}`.replace(/\\+/g, '/');
-// };
-
-// export const createFolder = async (req, res, next) => {
-//   try {
-//     const { name, parent = null } = req.body;
-//     if (!name) {
-//       res.status(400);
-//       throw new Error('Name required');
-//     }
-
-//     if (parent) {
-//       const parentDoc = await Folder.findOne({ _id: parent, owner: req.user._id });
-//       if (!parentDoc) {
-//         res.status(404);
-//         throw new Error('Parent not found');
-//       }
-//     }
-
-//     const path = await buildPath(name, parent);
-//     const folder = await Folder.create({ name, owner: req.user._id, parent: parent || null, path });
-//     res.status(201).json(folder);
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-// export const listFolders = async (req, res, next) => {
-//   try {
-//     const folders = await Folder.find({ owner: req.user._id }).sort('createdAt');
-//     res.json(folders);
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-// export const tree = async (req, res, next) => {
-//   try {
-//     const folders = await Folder.find({ owner: req.user._id }).lean();
-//     const map = new Map();
-//     folders.forEach(f => map.set(String(f._id), { ...f, children: [] }));
-//     const roots = [];
-//     folders.forEach(f => {
-//       if (f.parent) map.get(String(f.parent))?.children.push(map.get(String(f._id)));
-//       else roots.push(map.get(String(f._id)));
-//     });
-//     res.json(roots);
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-// export const deleteFolder = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const target = await Folder.findOne({ _id: id, owner: req.user._id });
-//     if (!target) {
-//       res.status(404);
-//       throw new Error('Folder not found');
-//     }
-
-//     // collect descendants
-//     const all = await Folder.find({ owner: req.user._id }).select('_id parent');
-//     const ids = new Set([String(target._id)]);
-//     let added = true;
-//     while (added) {
-//       added = false;
-//       for (const f of all) {
-//         if (f.parent && ids.has(String(f.parent)) && !ids.has(String(f._id))) {
-//           ids.add(String(f._id));
-//           added = true;
-//         }
-//       }
-//     }
-//     const folderIds = Array.from(ids);
-
-//     // delete folders (images removal handled in image delete endpoint or implement cascade)
-//     await Folder.deleteMany({ _id: { $in: folderIds } });
-//     res.json({ message: 'Folder deleted (images should be cleaned separately if needed)' });
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-
-
-// src/controllers/folder.controller.js
 import Folder from '../models/folder.model.js';
 import Image from '../models/image.model.js';
 
@@ -121,11 +28,13 @@ export const createFolder = async (req, res, next) => {
     const existing = await Folder.findOne({
       name: name.trim(),
       owner: req.user._id,
-      parent: parentFolder || null
+      parent: parentFolder || null,
     });
 
     if (existing) {
-      return res.status(400).json({ message: 'Folder with this name already exists in this location' });
+      return res
+        .status(400)
+        .json({ message: 'Folder with this name already exists in this location' });
     }
 
     const path = await buildPath(name.trim(), parentFolder);
@@ -133,13 +42,13 @@ export const createFolder = async (req, res, next) => {
       name: name.trim(),
       owner: req.user._id,
       parent: parentFolder || null,
-      path
+      path,
     });
 
     // Return folder with parentFolder field for frontend compatibility
     const result = {
       ...folder.toObject(),
-      parentFolder: folder.parent
+      parentFolder: folder.parent,
     };
 
     res.status(201).json(result);
@@ -158,7 +67,7 @@ export const listFolders = async (req, res, next) => {
     const result = folders.map(folder => ({
       ...folder.toObject(),
       parentFolder: folder.parent?._id || null,
-      parentName: folder.parent?.name || null
+      parentName: folder.parent?.name || null,
     }));
 
     res.json(result);
@@ -186,13 +95,13 @@ export const getFolderContents = async (req, res, next) => {
     res.json({
       folder: {
         ...folder.toObject(),
-        parentFolder: folder.parent
+        parentFolder: folder.parent,
       },
       subfolders: subfolders.map(f => ({
         ...f.toObject(),
-        parentFolder: f.parent
+        parentFolder: f.parent,
       })),
-      images
+      images,
     });
   } catch (error) {
     next(error);
@@ -218,11 +127,13 @@ export const updateFolder = async (req, res, next) => {
       name: name.trim(),
       owner: req.user._id,
       parent: folder.parent,
-      _id: { $ne: id }
+      _id: { $ne: id },
     });
 
     if (existing) {
-      return res.status(400).json({ message: 'Folder with this name already exists in this location' });
+      return res
+        .status(400)
+        .json({ message: 'Folder with this name already exists in this location' });
     }
 
     folder.name = name.trim();
@@ -231,7 +142,7 @@ export const updateFolder = async (req, res, next) => {
 
     const result = {
       ...folder.toObject(),
-      parentFolder: folder.parent
+      parentFolder: folder.parent,
     };
 
     res.json(result);
@@ -250,7 +161,7 @@ export const tree = async (req, res, next) => {
       map.set(String(f._id), {
         ...f,
         parentFolder: f.parent,
-        children: []
+        children: [],
       });
     });
 
@@ -302,18 +213,18 @@ export const deleteFolder = async (req, res, next) => {
     // Delete all images in these folders
     await Image.deleteMany({
       folder: { $in: folderIdArray },
-      owner: req.user._id
+      owner: req.user._id,
     });
 
     // Delete all folders
     await Folder.deleteMany({
       _id: { $in: folderIdArray },
-      owner: req.user._id
+      owner: req.user._id,
     });
 
     res.json({
       message: 'Folder and all its contents deleted successfully',
-      deletedFolders: folderIdArray.length
+      deletedFolders: folderIdArray.length,
     });
   } catch (error) {
     next(error);

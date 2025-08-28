@@ -1,4 +1,3 @@
-// src/components/FolderCard.jsx
 import {
   Calendar,
   Edit2,

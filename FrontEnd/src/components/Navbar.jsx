@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import { FolderOpen, Home, LogOut, User } from 'lucide-react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

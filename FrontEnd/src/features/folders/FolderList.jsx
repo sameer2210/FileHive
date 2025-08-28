@@ -1,4 +1,3 @@
-// src/features/folders/FolderList.jsx
 import {
   ChevronDownIcon,
   ChevronRightIcon,

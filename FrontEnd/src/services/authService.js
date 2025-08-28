@@ -1,4 +1,3 @@
-// src/services/authService.js
 import axiosInstance from '../utils/axiosInstance.js';
 
 const API_ENDPOINTS = {

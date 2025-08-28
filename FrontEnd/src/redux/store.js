@@ -1,27 +1,3 @@
-// // src/redux/store.js
-// import { configureStore } from '@reduxjs/toolkit';
-// import authReducer from '../features/auth/authSlice.js';
-// import folderReducer from '../features/folders/folderSlice.js';
-// import imageReducer from '../features/images/imageSlice.js';
-
-// export const store = configureStore({
-//   reducer: {
-//     auth: authReducer,
-//     folders: folderReducer,
-//     images: imageReducer,
-//   },
-//   middleware: getDefaultMiddleware =>
-//     getDefaultMiddleware({
-//       serializableCheck: {
-//         ignoredActions: ['persist/PERSIST'],
-//       },
-//     }),
-// });
-
-
-
-
-// src/redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from '../features/auth/authSlice.js';
 import folderSlice from '../features/folders/folderSlice.js';
@@ -33,7 +9,7 @@ export const store = configureStore({
     folders: folderSlice,
     images: imageSlice,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],

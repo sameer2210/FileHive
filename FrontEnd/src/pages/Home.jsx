@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import {
   CloudArrowUpIcon,
   FolderIcon,

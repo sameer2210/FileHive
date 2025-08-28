@@ -1,4 +1,3 @@
-// src/components/ImageCard.jsx
 import {
   Calendar,
   Download,

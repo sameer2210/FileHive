@@ -1,104 +1,68 @@
 // src/features/images/UploadImage.jsx
-import { CloudArrowUpIcon, DocumentIcon, PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadImage } from './imageSlice.js';
 
-export default function UploadImage({ onImageUploaded, selectedFolder = null }) {
+export default function UploadImage({ onImageUploaded, folderId = null }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
 
   const dispatch = useDispatch();
   const { folders } = useSelector(state => state.folders);
-  const { loading } = useSelector(state => state.images);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
-
-  const selectedFolderId = watch('folderId');
-
-  const handleFileSelect = file => {
+  const handleFileSelect = e => {
+    const file = e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setSelectedFile(file);
-      setValue('image', file);
 
       // Create preview
       const reader = new FileReader();
-      reader.onload = e => setPreviewUrl(e.target.result);
+      reader.onload = e => setPreview(e.target.result);
       reader.readAsDataURL(file);
-
-      // Auto-fill name if empty
-      const fileName = file.name.split('.')[0];
-      setValue('name', fileName);
     }
   };
 
-  const handleDrag = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setDragActive(false);
-    }
-  };
+  const handleUpload = async () => {
+    if (!selectedFile) return;
 
-  const handleDrop = e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileSelect(e.dataTransfer.files[0]);
-    }
-  };
-
-  const onSubmit = async data => {
+    setUploading(true);
     try {
       const formData = new FormData();
-      formData.append('name', data.name);
       formData.append('image', selectedFile);
-      if (data.folderId) {
-        formData.append('folderId', data.folderId);
+      if (folderId) {
+        formData.append('folderId', folderId);
       }
 
-      const result = await dispatch(uploadImage(formData));
-      if (result.meta.requestStatus === 'fulfilled') {
+      // Replace this with your actual upload API call
+      // const result = await dispatch(uploadImage(formData));
+
+      // For now, just simulate success
+      setTimeout(() => {
         handleClose();
         if (onImageUploaded) {
           onImageUploaded();
         }
-      }
+        setUploading(false);
+      }, 1500);
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Upload failed:', error);
+      setUploading(false);
     }
   };
 
   const handleClose = () => {
     setIsModalOpen(false);
-    setPreviewUrl(null);
     setSelectedFile(null);
-    setDragActive(false);
-    reset();
-  };
-
-  const removeSelectedFile = () => {
-    setSelectedFile(null);
-    setPreviewUrl(null);
-    setValue('image', null);
+    setPreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
+  };
+
+  const handleModalContentClick = e => {
+    e.stopPropagation();
   };
 
   return (
@@ -106,190 +70,185 @@ export default function UploadImage({ onImageUploaded, selectedFolder = null }) 
       {/* Trigger Button */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="btn btn-primary flex items-center gap-2"
+        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
       >
-        <CloudArrowUpIcon className="w-5 h-5" />
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+          />
+        </svg>
         Upload Image
       </button>
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            {/* Backdrop */}
-            <div
-              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-              onClick={handleClose}
-            />
-
-            {/* Modal Content */}
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center">
-                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <CloudArrowUpIcon className="h-6 w-6 text-blue-600" />
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-lg font-medium text-gray-900">Upload Image</h3>
-                      <p className="text-sm text-gray-500">Add a new image to your collection</p>
-                    </div>
-                  </div>
-                  <button onClick={handleClose} className="text-gray-400 hover:text-gray-600">
-                    <XMarkIcon className="w-6 h-6" />
-                  </button>
-                </div>
-
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  {/* File Upload Area */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Select Image *
-                    </label>
-
-                    {!selectedFile ? (
-                      <div
-                        className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                          dragActive
-                            ? 'border-blue-400 bg-blue-50'
-                            : 'border-gray-300 hover:border-gray-400'
-                        }`}
-                        onDragEnter={handleDrag}
-                        onDragLeave={handleDrag}
-                        onDragOver={handleDrag}
-                        onDrop={handleDrop}
-                      >
-                        <PhotoIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                        <div className="space-y-2">
-                          <p className="text-gray-600">
-                            <span className="font-medium">Click to upload</span> or drag and drop
-                          </p>
-                          <p className="text-sm text-gray-500">PNG, JPG, JPEG up to 10MB</p>
-                        </div>
-
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept="image/*"
-                          onChange={e => handleFileSelect(e.target.files[0])}
-                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative">
-                        <div className="border border-gray-300 rounded-lg p-4">
-                          <div className="flex items-center space-x-4">
-                            <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
-                              {previewUrl ? (
-                                <img
-                                  src={previewUrl}
-                                  alt="Preview"
-                                  className="w-full h-full object-cover"
-                                />
-                              ) : (
-                                <DocumentIcon className="w-full h-full text-gray-400 p-2" />
-                              )}
-                            </div>
-                            <div className="flex-grow">
-                              <p className="font-medium text-gray-900 truncate">
-                                {selectedFile.name}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-                              </p>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={removeSelectedFile}
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              <XMarkIcon className="w-5 h-5" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Image Name */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Image Name *
-                    </label>
-                    <input
-                      type="text"
-                      {...register('name', {
-                        required: 'Image name is required',
-                        minLength: {
-                          value: 1,
-                          message: 'Image name cannot be empty',
-                        },
-                        maxLength: {
-                          value: 100,
-                          message: 'Image name cannot exceed 100 characters',
-                        },
-                      })}
-                      className="input"
-                      placeholder="Enter image name"
-                      disabled={loading}
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+          onClick={handleClose}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl w-full max-w-lg"
+            onClick={handleModalContentClick}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                    )}
-                  </div>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Upload Image</h3>
+                  <p className="text-sm text-gray-500">Choose an image to upload</p>
+                </div>
+              </div>
+              <button onClick={handleClose} className="text-gray-400 hover:text-gray-600 p-1">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
 
-                  {/* Folder Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Upload to Folder (Optional)
-                    </label>
-                    <select
-                      {...register('folderId')}
-                      className="input"
-                      disabled={loading}
-                      defaultValue={selectedFolder?._id || ''}
-                    >
-                      <option value="">Root (No folder)</option>
-                      {folders.map(folder => (
-                        <option key={folder._id} value={folder._id}>
-                          {folder.name}
-                        </option>
-                      ))}
-                    </select>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Choose a folder to organize your image
-                    </p>
-                  </div>
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              {/* File Input */}
+              <div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                  id="file-upload"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="w-full h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                >
+                  {selectedFile ? (
+                    <div className="text-center">
+                      <svg
+                        className="w-8 h-8 text-green-500 mx-auto"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                      <p className="text-sm text-gray-600 mt-2">{selectedFile.name}</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <svg
+                        className="w-8 h-8 text-gray-400 mx-auto"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                      <p className="text-sm text-gray-600 mt-2">Click to select image</p>
+                      <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
+                    </div>
+                  )}
+                </label>
+              </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex justify-end space-x-3 pt-4">
-                    <button
-                      type="button"
-                      onClick={handleClose}
-                      className="btn btn-secondary"
-                      disabled={loading}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      disabled={loading || !selectedFile}
-                    >
-                      {loading ? (
-                        <div className="flex items-center">
-                          <div className="loader mr-2"></div>
-                          Uploading...
-                        </div>
-                      ) : (
-                        <>
-                          <CloudArrowUpIcon className="w-4 h-4 mr-2" />
-                          Upload Image
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
+              {/* Preview */}
+              {preview && (
+                <div className="mt-4">
+                  <p className="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className="w-full max-h-64 object-contain bg-gray-50 rounded-lg"
+                  />
+                </div>
+              )}
+
+              {/* Folder Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Upload to Folder (Optional)
+                </label>
+                <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                  <option value="">Root (No folder)</option>
+                  {folders.map(folder => (
+                    <option key={folder._id} value={folder._id}>
+                      {folder.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md font-medium transition-colors duration-200"
+                  disabled={uploading}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpload}
+                  disabled={!selectedFile || uploading}
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {uploading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
+                      </svg>
+                      Upload
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>

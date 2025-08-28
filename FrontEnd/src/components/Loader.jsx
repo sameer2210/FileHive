@@ -1,16 +1,5 @@
-// src/components/Loader.jsx
 import { memo } from 'react';
 
-/**
- * Professional Loading Component with multiple variants
- * @param {Object} props - Component props
- * @param {string} props.variant - Loader variant: 'spinner', 'dots', 'pulse', 'bars'
- * @param {string} props.size - Size: 'sm', 'md', 'lg', 'xl'
- * @param {string} props.color - Color theme: 'blue', 'gray', 'green', 'purple'
- * @param {string} props.text - Optional loading text
- * @param {boolean} props.overlay - Show as overlay
- * @param {string} props.className - Additional CSS classes
- */
 const Loader = memo(
   ({
     variant = 'spinner',
@@ -203,30 +192,3 @@ const Loader = memo(
 Loader.displayName = 'Loader';
 
 export default Loader;
-
-// Usage Examples:
-/*
-// Basic spinner
-<Loader />
-
-// Large spinner with text
-<Loader size="lg" text="Loading your files..." />
-
-// Dots loader with custom color
-<Loader variant="dots" color="green" text="Uploading..." />
-
-// Pulse loader as overlay
-<Loader variant="pulse" overlay text="Processing..." />
-
-// Bars loader
-<Loader variant="bars" size="lg" color="purple" />
-
-// Custom styled loader
-<Loader
-  variant="spinner"
-  size="xl"
-  color="blue"
-  text="Please wait..."
-  className="bg-gray-50 rounded-lg p-8"
-/>
-*/

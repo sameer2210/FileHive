@@ -6,6 +6,8 @@ Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
 
 [ Backend deployment ](https://drive-ai.onrender.com/)
 
+but /api also need in frontend
+
 ## Features
 
 User authentication (Signup, Login, JWT-based sessions)
