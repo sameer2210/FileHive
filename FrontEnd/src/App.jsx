@@ -17,7 +17,7 @@ function ProtectedRoute({ children }) {
   const { token } = useSelector(state => state.auth);
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return children;
@@ -40,6 +40,14 @@ export default function App() {
       <Routes>
         {/* Public Auth Routes */}
         <Route element={<AuthLayout />}>
+          <Route
+            path="/home"
+            element={
+              <PublicRoute>
+                <Home />
+              </PublicRoute>
+            }
+          />
           <Route
             path="/login"
             element={

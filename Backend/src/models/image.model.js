@@ -2,37 +2,13 @@ import mongoose from 'mongoose';
 
 const imageSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
-    cloudinaryId: {
-      type: String,
-      required: true,
-    },
-    folder: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Folder',
-      required: true,
-      index: true,
-    },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-      index: true,
-    },
-    size: {
-      type: Number,
-    },
-    mimeType: {
-      type: String,
-    },
+    name: { type: String, required: true, trim: true },
+    url: { type: String, required: true },
+    cloudinaryId: { type: String, required: true },
+    folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder', required: true, index: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    size: { type: Number },
+    mimeType: { type: String },
     tags: [
       {
         type: String,
