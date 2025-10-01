@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 export default function AuthLayout() {
   const { token } = useSelector(state => state.auth);
@@ -11,6 +12,7 @@ export default function AuthLayout() {
 
   return (
     <>
+      <Navbar />
       <Outlet />
     </>
   );

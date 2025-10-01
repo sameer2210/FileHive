@@ -74,17 +74,17 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 sm:px-6">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-2">
         {/* Signup Form */}
-        <div className="bg-white rounded shadow-xl font-mono p-8 ">
+        <div className=" rounded shadow-2xl font-mono p-8 mt-8 ">
           <div className="text-center">
             <h2 className="text-3xl font-bold  text-gray-900 mb-2">Create your account</h2>
-            <p className="text-sm text-gray-600">Join Drive and start organizing your files</p>
+            <p className="text-sm text-gray-600">Join FilH and start organizing your files</p>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 mt-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 ">
                 Full Name
               </label>
               <div className="relative">
@@ -123,7 +123,7 @@ export default function Signup() {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email Address
               </label>
               <div className="relative">
@@ -158,7 +158,7 @@ export default function Signup() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="relative">
@@ -209,10 +209,7 @@ export default function Signup() {
 
             {/* Confirm Password Field */}
             <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 ">
                 Confirm Password
               </label>
               <div className="relative">
@@ -294,7 +291,7 @@ export default function Signup() {
         </div>
 
         {/* Terms Notice */}
-        <div className="text-center text-xs text-gray-500">
+        <div className="text-center text-xs text-gray-500 ">
           <p>
             By creating an account, you agree to our{' '}
             <a href="#" className="text-teal-600 hover:underline">

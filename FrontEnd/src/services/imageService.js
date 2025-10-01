@@ -1,7 +1,7 @@
 import axiosInstance from '../utils/axiosInstance.js';
 
 const imageService = {
-  /**
+  /*
    * Upload an image to a specific folder
    * @param {FormData} formData - Contains image file, name, and folderId
    * @returns {Promise} - Uploaded image data
@@ -20,16 +20,14 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Search images by name for the current user
    * @param {string} query - Search query string
    * @returns {Promise} - Array of matching images
    */
   async searchImages(query) {
     try {
-      const response = await axiosInstance.get(
-        `/images/search?query=${encodeURIComponent(query)}`
-      );
+      const response = await axiosInstance.get(`/images/search?query=${encodeURIComponent(query)}`);
       return response.data;
     } catch (error) {
       console.error('Search images error:', error);
@@ -37,7 +35,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Get all images for the current user
    * @param {string} folderId - Optional folder ID to filter images
    * @returns {Promise} - Array of user's images
@@ -45,16 +43,15 @@ const imageService = {
   async getImages(folderId = null) {
     try {
       const url = folderId ? `/images?folderId=${folderId}` : '/images';
-
       const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
-      console.error('Get images error:', error);
+      console.error('Get images error :', error);
       throw error;
     }
   },
 
-  /**
+  /*
    * Get images by folder ID
    * @param {string} folderId - Folder ID to get images from
    * @returns {Promise} - Array of images in the folder
@@ -69,7 +66,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Delete an image by ID
    * @param {string} imageId - ID of the image to delete
    * @returns {Promise} - Delete confirmation
@@ -84,7 +81,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Update image details (name, folder)
    * @param {string} imageId - ID of the image to update
    * @param {Object} updateData - Data to update (name, folderId)
@@ -100,7 +97,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Get image details by ID
    * @param {string} imageId - ID of the image
    * @returns {Promise} - Image details
@@ -115,7 +112,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Move image to different folder
    * @param {string} imageId - ID of the image to move
    * @param {string} newFolderId - ID of the destination folder
@@ -133,7 +130,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Get recently uploaded images
    * @param {number} limit - Number of recent images to fetch (default: 10)
    * @returns {Promise} - Array of recent images
@@ -148,7 +145,7 @@ const imageService = {
     }
   },
 
-  /**
+  /*
    * Get image statistics for the current user
    * @returns {Promise} - Image statistics (total count, size, etc.)
    */
