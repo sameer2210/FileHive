@@ -40,6 +40,8 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
       formData.append('name', selectedFile.name); // <-- REQUIRED
       formData.append('folderId', selectedFolderId);
 
+    // console.log([...formData.entries()]);
+
       const resultAction = await dispatch(uploadImage(formData));
       if (uploadImage.fulfilled.match(resultAction)) {
         handleClose();

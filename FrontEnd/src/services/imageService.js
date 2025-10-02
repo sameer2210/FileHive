@@ -8,11 +8,7 @@ const imageService = {
    */
   async uploadImage(formData) {
     try {
-      const response = await axiosInstance.post('/images/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axiosInstance.post('/images/upload/', formData);
       return response.data;
     } catch (error) {
       console.error('Upload image error:', error);

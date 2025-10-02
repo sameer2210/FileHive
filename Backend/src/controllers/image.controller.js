@@ -9,6 +9,8 @@ export const uploadMiddleware = upload.single('image');
 
 export const uploadImage = async (req, res, next) => {
   try {
+    console.log('Incoming request body:', req.body); // Should show { name: 'example.jpg', folderId: '66f...' }
+    console.log('Incoming file:', req.file); // Should show { originalname: 'example.jpg', buffer: <Buffer ...>, ... }
     const { name, folderId } = req.body;
     if (!name || !folderId) {
       res.status(400);
@@ -41,6 +43,7 @@ export const uploadImage = async (req, res, next) => {
 
     res.status(201).json(doc);
   } catch (e) {
+    console.error('Upload controller error:', e); // Log the full error here
     next(e);
   }
 };

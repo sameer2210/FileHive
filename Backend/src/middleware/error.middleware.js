@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export const notFound = (req, res, next) => {
   const err = new Error(`Not found - ${req.originalUrl}`);
   res.status(404);

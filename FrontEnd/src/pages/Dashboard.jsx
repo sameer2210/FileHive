@@ -98,6 +98,25 @@ export default function Dashboard() {
       .slice(0, 5);
   }, [images]);
 
+  // Format time ago helper
+  const formatTimeAgo = dateString => {
+    if (!dateString) return 'Just now';
+
+    try {
+      const date = new Date(dateString);
+      const now = new Date();
+      const seconds = Math.floor((now - date) / 1000);
+
+      if (seconds < 60) return 'Just now';
+      if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+      if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+      if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
+      return date.toLocaleDateString();
+    } catch {
+      return 'Just now';
+    }
+  };
+
   // Generate dynamic activity feed
   const recentActivity = useMemo(() => {
     const activities = [];
@@ -129,25 +148,6 @@ export default function Dashboard() {
     // Sort by timestamp and return top 5
     return activities.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5);
   }, [recentFolders, recentImages]);
-
-  // Format time ago helper
-  const formatTimeAgo = dateString => {
-    if (!dateString) return 'Just now';
-
-    try {
-      const date = new Date(dateString);
-      const now = new Date();
-      const seconds = Math.floor((now - date) / 1000);
-
-      if (seconds < 60) return 'Just now';
-      if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-      if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-      if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
-      return date.toLocaleDateString();
-    } catch {
-      return 'Just now';
-    }
-  };
 
   const handleSearch = query => {
     setSearchQuery(query);

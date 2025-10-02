@@ -3,9 +3,6 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   timeout: 15000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // Request interceptor: Add token, full URL logging
@@ -15,6 +12,11 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    if (!(config.data instanceof FormData)) {
+      config.headers['Content-Type'] = 'application/json';
+    }
+
     if (import.meta.env.DEV) {
       console.log(
         ` ${config.method?.toUpperCase()} ${config.baseURL}${config.url} | Data:`,
