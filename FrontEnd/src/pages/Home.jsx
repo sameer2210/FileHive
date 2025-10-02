@@ -91,11 +91,9 @@ export default function FileHiveHomepage() {
 
   return (
     <div className="min-h-screen">
-
-
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gray-50 pt-20">
-        <div className="max-w-7xl mx-auto px-6 py-12">
+      <section className=" py-8 lg:py-16 pt-22 lg:pt-22">
+        <div className="max-w-7xl mx-auto px-2">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 min-h-[80vh] items-center">
             {/* Left Content */}
             <div className="space-y-8">
@@ -103,7 +101,7 @@ export default function FileHiveHomepage() {
                 <div className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">
                   FEATURED WORK
                 </div>
-                <h1 className="text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter text-gray-900">
+                <h1 className="text-[6rem] md:text-[12rem] font-black leading-none tracking-tighter text-gray-900">
                   FILE
                   <br />
                   HIVE
@@ -112,9 +110,9 @@ export default function FileHiveHomepage() {
             </div>
 
             {/* Right Content - Call to Action */}
-            <div className="bg-white p-12 rounded-2xl shadow-lg space-y-8">
+            <div className="bg-white p-4 lg:p-12 rounded-2xl shadow-lg space-y-8">
               <div className="space-y-6">
-                <h2 className="text-4xl font-bold text-emerald-500 leading-tight">
+                <h2 className="text-4xl font-bold text-emerald-700 leading-tight">
                   Let's create something special
                 </h2>
                 <p className="text-xl text-gray-700 leading-relaxed">
@@ -160,21 +158,21 @@ export default function FileHiveHomepage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-32 bg-white" id="services" data-animate>
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-8 lg:py-16 bg-white" id="services" data-animate>
+        <div className="max-w-7xl mx-auto px-2">
           <div className="mb-20">
             <div className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase mb-4">
               THREE SERVICES DRIVE OUR WORK
             </div>
-            <h2 className="text-6xl md:text-8xl font-black text-gray-900 mb-4">Our Core</h2>
-            <h2 className="text-6xl md:text-8xl font-black text-gray-900">SERVICES</h2>
+            <h2 className="text-5xl md:text-8xl font-black text-gray-900 mb-4">Our Core</h2>
+            <h2 className="text-5xl md:text-8xl font-black text-gray-900">SERVICES</h2>
           </div>
 
-          <div className="space-y-32">
+          <div className="space-y-22">
             {/* Service 1 - Cloud Storage */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-3">
-                <h3 className="text-5xl font-black text-gray-900">Cloud Storage</h3>
+                <h3 className="text-6xl font-black text-gray-900">Cloud Storage</h3>
               </div>
               <div className="lg:col-span-5 space-y-6">
                 <h4 className="text-xl font-bold text-gray-900">Intelligent File Management</h4>
@@ -189,7 +187,7 @@ export default function FileHiveHomepage() {
                 </button>
               </div>
               <div className="lg:col-span-4">
-                <div className="bg-emerald-500 aspect-square rounded-lg flex items-center justify-center">
+                <div className="bg-gradient-to-r from-teal-500 to-emerald-950 aspect-square rounded-lg flex items-center justify-center">
                   <div className="text-center text-white">
                     <CloudArrowUpIcon className="w-16 h-16 mx-auto mb-4" />
                     <div className="text-3xl font-bold">CLOUD</div>
@@ -201,7 +199,9 @@ export default function FileHiveHomepage() {
             {/* Service 2 - Smart Organization */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-3">
-                <h3 className="text-5xl font-black text-gray-900">Smart Organization</h3>
+                <h3 className="text-[2.5rem] lg:text-5xl font-black text-gray-900">
+                  Smart Organization
+                </h3>
               </div>
               <div className="lg:col-span-5 space-y-6">
                 <h4 className="text-xl font-bold text-gray-900">Folder & Search System</h4>
@@ -216,7 +216,7 @@ export default function FileHiveHomepage() {
                 </button>
               </div>
               <div className="lg:col-span-4">
-                <div className="bg-gray-900 aspect-square rounded-lg flex items-center justify-center relative overflow-hidden">
+                <div className="bg-gradient-to-r from-stone-900 to-red-700 aspect-square rounded-lg flex items-center justify-center relative overflow-hidden">
                   <div className="text-center text-white z-10">
                     <FolderIcon className="w-16 h-16 mx-auto mb-4" />
                     <div className="text-3xl font-bold">ORGANIZE</div>
@@ -230,8 +230,8 @@ export default function FileHiveHomepage() {
       </section>
 
       {/* Project Showcase */}
-      <section className="py-32 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-4 lg:py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-2">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div className="space-y-8">
               <div className="relative">
@@ -251,7 +251,7 @@ export default function FileHiveHomepage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-teal-700 to-emerald-800 rounded-2xl p-12 text-white relative overflow-hidden min-h-[400px] flex flex-col justify-center">
+            <div className="bg-gradient-to-r from-black to-cyan-600 rounded-2xl px-4 lg:p-12 text-white relative overflow-hidden min-h-[400px] flex flex-col justify-center">
               <div className="relative z-10 space-y-6">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
                   <CloudArrowUpIcon className="w-8 h-8" />
@@ -297,8 +297,8 @@ export default function FileHiveHomepage() {
       </section>
 
       {/* About Section */}
-      <section className="py-32 bg-white" id="about">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-8 lg:py-16 bg-white" id="about">
+        <div className="max-w-7xl mx-auto px-2">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
@@ -306,13 +306,13 @@ export default function FileHiveHomepage() {
                 supported by cutting-edge technology. It creates seamless digital experiences where
                 powerful functionality meets intuitive design.
               </h2>
-              <button className="inline-flex items-center px-6 py-3 bg-black text-white font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors">
+              <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-stone-500 to-rose-500 rounded text-white font-bold text-sm tracking-wide hover:bg-gray-800 transition-colors">
                 ABOUT US
                 <ArrowRightIcon className="w-4 h-4 ml-2" />
               </button>
             </div>
 
-            <div className="bg-gray-100 p-8 space-y-8">
+            <div className="bg-gray-100  lg:p-8 space-y-8">
               <div className="bg-white p-6 rounded">
                 <img
                   src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop"
@@ -377,8 +377,8 @@ export default function FileHiveHomepage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-32 bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
+      <section className="py-8 lg:py-16 bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white">
+        <div className="max-w-4xl mx-auto px-2 text-center space-y-12">
           <div className="space-y-4">
             <h2 className="text-6xl md:text-8xl font-black tracking-tighter">Born to Organize</h2>
             <p className="text-xl text-gray-400 leading-relaxed">
@@ -395,7 +395,7 @@ export default function FileHiveHomepage() {
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <Link
                 to="/signup"
-                className="inline-flex items-center px-8 py-4 bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-600 transition-colors rounded"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-teal-500 to-emerald-950 text-white font-bold text-lg hover:bg-emerald-600 transition-colors rounded"
               >
                 Start Free Trial
                 <ArrowRightIcon className="w-5 h-5 ml-2" />
@@ -409,7 +409,7 @@ export default function FileHiveHomepage() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 pt-12 text-sm text-gray-400">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 pt-2 lg:pt-12 text-sm text-gray-400">
             <div className="flex items-center gap-2">
               <CheckIcon className="w-4 h-4" />
               14-day free trial

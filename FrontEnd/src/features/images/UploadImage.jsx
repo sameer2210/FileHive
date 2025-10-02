@@ -40,7 +40,7 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
       formData.append('name', selectedFile.name); // <-- REQUIRED
       formData.append('folderId', selectedFolderId);
 
-    // console.log([...formData.entries()]);
+      // console.log([...formData.entries()]);
 
       const resultAction = await dispatch(uploadImage(formData));
       if (uploadImage.fulfilled.match(resultAction)) {
@@ -73,7 +73,7 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
       {/* Trigger Button */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+        className="bg-gradient-to-r from-teal-500 to-emerald-950 p-4 sm:p-6 text-white px-4 py-2 rounded-lg font-medium hover:bg-teal-500 transition-colors duration-200 flex items-center gap-2"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -230,7 +230,7 @@ export default function UploadImage({ onImageUploaded, folderId = null }) {
                 <button
                   onClick={handleUpload}
                   disabled={!selectedFile || !selectedFolderId || uploading}
-                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-4 py-2 bg-gradient-to-r from-teal-500 to-emerald-950  hover:bg-green-600 text-white rounded-md font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   {uploading ? (
                     <>

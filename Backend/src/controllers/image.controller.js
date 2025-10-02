@@ -62,13 +62,43 @@ export const searchImages = async (req, res, next) => {
 };
 
 // GET /api/images?folderId=xxx&page=1&limit=20
+// export const getImages = async (req, res) => {
+//   try {
+//     const { folderId, page = 1, limit = 20 } = req.query;
+
+//     // Build query: user-specific + optional folder filter
+//     const query = { user: req.user._id };
+//     if (folderId) query.folderId = folderId;
+
+//     const images = await Image.find(query)
+//       .sort({ createdAt: -1 }) // newest first
+//       .skip((page - 1) * limit)
+//       .limit(Number(limit));
+
+//     const total = await Image.countDocuments(query);
+
+//     res.json({
+//       success: true,
+//       total,
+//       page: Number(page),
+//       pages: Math.ceil(total / limit),
+//       images,
+//     });
+//   } catch (error) {
+//     console.error('Error fetching images:', error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
+
+
+// GET /api/images?folderId=xxx&page=1&limit=20
 export const getImages = async (req, res) => {
   try {
     const { folderId, page = 1, limit = 20 } = req.query;
 
     // Build query: user-specific + optional folder filter
-    const query = { user: req.user._id };
-    if (folderId) query.folderId = folderId;
+    const query = { owner: req.user._id };  // Change 'user' to 'owner'
+    if (folderId) query.folder = folderId;  // Change 'folderId' to 'folder'
 
     const images = await Image.find(query)
       .sort({ createdAt: -1 }) // newest first

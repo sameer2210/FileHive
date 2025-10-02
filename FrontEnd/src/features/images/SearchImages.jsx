@@ -113,7 +113,7 @@ export default function SearchImages() {
   }, [searchQuery]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto lg:px-4 lg:py-6 ">
       {/* Search Header */}
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
@@ -125,7 +125,7 @@ export default function SearchImages() {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-3 lg:p-6  mb-6">
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Search Input */}
           <div className="flex-1">

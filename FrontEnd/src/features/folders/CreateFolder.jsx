@@ -50,7 +50,7 @@ export default function CreateFolder({ onFolderCreated, parentFolder = null }) {
       {/* Trigger Button */}
       <button
         onClick={() => setIsModalOpen(true)}
-        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
+        className="bg-gradient-to-r from-black to-cyan-600 rounded-2xl p-4 sm:p-6 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
