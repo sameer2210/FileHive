@@ -10,6 +10,7 @@ import { errorHandler, notFound } from './middleware/error.middleware.js';
 import authRoutes from './routes/auth.routes.js';
 import folderRoutes from './routes/folder.routes.js';
 import imageRoutes from './routes/image.routes.js';
+import otpRoutes from './routes/otp.routes.js';
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.get('/', (req, res) => res.json({ message: 'API running' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/folders', folderRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/otp', otpRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

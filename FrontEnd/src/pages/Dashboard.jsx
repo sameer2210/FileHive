@@ -1,5 +1,4 @@
 import {
-  Bell,
   Folder,
   FolderPlus,
   HardDrive,
@@ -206,7 +205,6 @@ export default function Dashboard() {
                   <div className="flex items-center min-w-0 flex-1">
                     {/* Mobile Menu Button */}
 
-
                     <div className="min-w-0 flex-1">
                       <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 truncate">
                         Dashboard
@@ -308,7 +306,7 @@ export default function Dashboard() {
                                     {folder.name}
                                   </div>
                                   <div className="text-xs text-gray-500 mt-1">
-                                    {folder.images?.length || 0} files
+                                    {folder.images?.length} files
                                   </div>
                                 </div>
                               ))}
