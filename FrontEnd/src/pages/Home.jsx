@@ -315,7 +315,7 @@ export default function FileHiveHomepage() {
             <div className="bg-gray-100  lg:p-8 space-y-8">
               <div className="bg-white p-6 rounded">
                 <img
-                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop"
+                  src="https://plus.unsplash.com/premium_photo-1752326185528-2ae789bd1581?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Team collaboration"
                   className="w-full h-48 object-cover rounded mb-4"
                 />
@@ -352,19 +352,19 @@ export default function FileHiveHomepage() {
                 </div>
                 <div className="flex space-x-4 pt-4">
                   <a
-                    href="#"
+                    href="https://portfolio-coral-two-16.vercel.app/"
                     className="text-xs font-bold tracking-[0.1em] text-gray-500 hover:text-emerald-500"
                   >
-                    Instagram
+                    Portfolio
                   </a>
                   <a
-                    href="#"
+                    href="http://linkedin.com/in/sameer-khan2210"
                     className="text-xs font-bold tracking-[0.1em] text-gray-500 hover:text-emerald-500"
                   >
                     LinkedIn
                   </a>
                   <a
-                    href="#"
+                    href="http://github.com/sameer2210"
                     className="text-xs font-bold tracking-[0.1em] text-gray-500 hover:text-emerald-500"
                   >
                     GitHub

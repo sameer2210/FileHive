@@ -2,9 +2,9 @@ import crypto from 'crypto';
 import Otp from '../models/otp.model.js';
 import { sendEmail } from '../utils/sendEmail.js';
 
-export const senedOpt = async (req, res) => {
+export const sendOpt = async (req, res) => {
   try {
-    console.log('Incoming body:', req.body);
+    // console.log('Incoming body:', req.body);
     const { email, name } = req.body;
     const otp = crypto.randomInt(100000, 999999).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
