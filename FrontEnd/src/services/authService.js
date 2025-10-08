@@ -6,6 +6,8 @@ const API_ENDPOINTS = {
   LOGOUT: '/auth/logout',
   PROFILE: '/auth/profile',
   REFRESH: '/auth/refresh-token',
+  SENDOTP: '/otp/send',
+  VERIFYOTP: '/otp/verify',
 };
 
 class AuthService {
@@ -115,6 +117,24 @@ class AuthService {
     } catch (error) {
       this.clearAuthToken();
       this.handleError(error, 'Token refresh failed');
+    }
+  }
+
+  async sendOtp({ email, name }) {
+    try {
+      const response = await axiosInstance.post(API_ENDPOINTS.SENDOTP, { email, name });
+      return response.data;
+    } catch (error) {
+      this.handleError(error, 'Failed to send OTP');
+    }
+  }
+
+  async verifyOtp(email, otp) {
+    try {
+      const response = await axiosInstance.post(API_ENDPOINTS.VERIFYOTP, { email, otp });
+      return response.data;
+    } catch (error) {
+      this.handleError(error || 'OTP verification failed');
     }
   }
 

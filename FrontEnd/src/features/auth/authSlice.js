@@ -35,6 +35,32 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, { rejectWith
   }
 });
 
+export const sendOtp = createAsyncThunk(
+  'otp/send',
+  async ({ email, name }, { rejectWithValue }) => {
+    try {
+      const response = await authService.sendOtp({ email, name });
+      return response;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message || 'Failed to send OTP';
+      return rejectWithValue(message);
+    }
+  }
+);
+
+export const verifyOtp = createAsyncThunk(
+  'otp/verifyOtp',
+  async ({ email, otp }, { rejectWithValue }) => {
+    try {
+      const response = await authService.verifyOtp(email, otp);
+      return response;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message || 'OTP verification failed';
+      return rejectWithValue(message);
+    }
+  }
+);
+
 // Helper function to get initial state from localStorage
 const getStoredAuthState = () => {
   try {
@@ -65,6 +91,9 @@ const initialState = {
   isLoading: false,
   error: null,
   isAuthenticated: !!storedAuth.token,
+  otpStatus: 'idle',
+  otpError: null,
+  isVerified: false,
 };
 
 // ===== Auth Slice =====
@@ -104,6 +133,9 @@ const authSlice = createSlice({
         state.user = { ...state.user, ...action.payload };
         localStorage.setItem('user', JSON.stringify(state.user));
       }
+    },
+    resetOtp: state => {
+      (state.otpStatus = 'idle'), (state.otpError = null);
     },
   },
 
@@ -178,12 +210,35 @@ const authSlice = createSlice({
         // Clear localStorage (FIXED: was removeUser → removeItem)
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+      })
+      .addCase(sendOtp.pending, state => {
+        state.otpStatus = 'loading';
+      })
+      .addCase(sendOtp.fulfilled, state => {
+        state.otpStatus = 'succeeded';
+        state.otpError = null;
+      })
+      .addCase(sendOtp.rejected, (state, action) => {
+        state.otpStatus = 'failed';
+        state.otpError = action.payload;
+      })
+      .addCase(verifyOtp.pending, state => {
+        state.otpStatus = 'loading';
+      })
+      .addCase(verifyOtp.fulfilled, state => {
+        state.otpStatus = 'succeeded';
+        state.isVerified = true;
+        state.otpError = null;
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.otpStatus = 'failed';
+        state.otpError = action.payload;
       });
   },
 });
 
 // Export actions
-export const { clearError, resetAuth, logout, updateUserProfile } = authSlice.actions;
+export const { resetOtp, clearError, resetAuth, logout, updateUserProfile } = authSlice.actions;
 
 // Export selectors
 export const selectCurrentUser = state => state.auth.user;
@@ -191,5 +246,4 @@ export const selectIsAuthenticated = state => state.auth.isAuthenticated;
 export const selectAuthLoading = state => state.auth.isLoading;
 export const selectAuthError = state => state.auth.error;
 
-// Export reducer
 export default authSlice.reducer;
