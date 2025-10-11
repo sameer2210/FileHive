@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import './src/config/redis.js';
 import http from 'http';
 import app from './src/app.js';
 import connectDB from './src/config/db.js';

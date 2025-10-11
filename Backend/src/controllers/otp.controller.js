@@ -71,13 +71,13 @@ export const verifyOtp = async (req, res) => {
     if (record.expiresAt < new Date())
       return res.status(400).json({ success: false, message: 'OTP expired' });
 
-    await Otp.deleteMany({ email });
-    res.json({ success: true, message: 'Email verified successfully' });
     const user = await User.findOne({ email });
     if (user) {
       user.isVerified = true;
       await user.save();
     }
+    await Otp.deleteMany({ email });
+    return res.json({ success: true, message: 'Email verified successfully' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

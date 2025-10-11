@@ -1,7 +1,7 @@
 {
-  "name": "drive_backend",
+  "name": "FileHive_Backend",
   "version": "1.0.0",
-  "description": "Backend for Drive-like app with Cloudinary image storage",
+  "description": "Backend for FileHive app with Cloudinary images storage",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -24,6 +24,7 @@
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
+    "redis": "^5.8.3",
     "resend": "^6.1.2",
     "streamifier": "^0.1.1"
   },
