@@ -1,72 +1,8 @@
-// import User from '../models/user.model.js';
-// import generateToken from '../utils/generateToken.js';
-
-// export const registerUser = async (req, res, next) => {
-//   try {
-//     const { name, email, password } = req.body;
-//     if (!name || !email || !password) {
-//       res.status(400);
-//       throw new Error('Missing fields');
-//     }
-//     const exists = await User.findOne({ email });
-//     if (exists) {
-//       res.status(400);
-//       throw new Error('User exists');
-//     }
-
-//     const user = await User.create({ name, email, password });
-//     res.status(201).json({
-//       _id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       token: generateToken(user._id),
-//     });
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-// export const loginUser = async (req, res, next) => {
-//   try {
-//     const { email, password } = req.body;
-//     if (!email || !password) {
-//       res.status(400);
-//       throw new Error('Missing fields');
-//     }
-
-//     const user = await User.findOne({ email });
-//     if (!user || !(await user.matchPassword(password))) {
-//       res.status(401);
-//       throw new Error('Invalid credentials');
-//     }
-
-//     res.json({ _id: user._id, name: user.name, email: user.email, token: generateToken(user._id) });
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-// export const logoutUser = async (req, res, next) => {
-//   try {
-//     // Clear the JWT cookie if using cookies
-//     res.cookie('jwt', '', {
-//       httpOnly: true,
-//       expires: new Date(0),
-//       sameSite: 'strict',
-//       secure: process.env.NODE_ENV === 'production',
-//     });
-//     return res.status(200).json({ message: 'Logged out successfully' });
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
-//----------------------------------------------------------------------------------------------------
-
-import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import redisClient from '../config/redis.js';
 import User from '../models/user.model.js';
 import generateToken from '../utils/generateToken.js';
+dotenv.config();
 
 export const registerUser = async (req, res, next) => {
   try {
@@ -124,3 +60,19 @@ export const logoutUser = async (req, res, next) => {
     next(e);
   }
 };
+
+//if not use Redis then remove from local Storage--------------------------------
+// export const logoutUser = async (req, res, next) => {
+//   try {
+//     // Clear the JWT cookie if using cookies
+//     res.cookie('JWT', '', {
+//       httpOnly: true,
+//       expires: new Date(0),
+//       sameSite: 'strict',
+//       secure: process.env.NODE_ENV === 'production',
+//     });
+//     return res.status(200).json({ message: 'Logged out successfully' });
+//   } catch (e) {
+//     next(e);
+//   }
+// };
