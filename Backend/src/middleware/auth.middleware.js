@@ -21,7 +21,8 @@ export const protect = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid session token' });
     }
 
-    req.user = decoded.id;
+    // req.user = decoded.id;
+    req.user = { _id: decoded.id };
     next();
   } catch (e) {
     console.error('Protect error:', e.message);

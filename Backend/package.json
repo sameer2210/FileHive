@@ -1,5 +1,5 @@
 {
-  "name": "FileHive_Backend",
+  "name": "filehive_backend",
   "version": "1.0.0",
   "description": "Backend for FileHive app with Cloudinary images storage",
   "main": "server.js",

@@ -10,15 +10,28 @@ const buildPath = async (name, parentId) => {
 
 export const createFolder = async (req, res, next) => {
   try {
-    const { name, parentFolder = null } = req.body; // Changed from 'parent' to 'parentFolder'
-
+    const { name, parentFolder = null } = req.body;
     if (!name?.trim()) {
       return res.status(400).json({ message: 'Name is required' });
     }
 
-    // Check if parent exists (if provided)
+    let effectiveParentId = null;
     if (parentFolder) {
-      const parentDoc = await Folder.findOne({ _id: parentFolder, owner: req.user._id });
+      if (parentFolder.match(/^[0-9a-fA-F]{24}$/)) {
+        effectiveParentId = parentFolder;
+      } else {
+        const parentByName = await Folder.findOne({
+          name: parentFolder.trim(),
+          owner: req.user._id,
+          parent: null, // Only root folders to avoid ambiguity
+        });
+        if (!parentByName) {
+          return res.status(404).json({ message: 'Parent folder not found by name' });
+        }
+        effectiveParentId = parentByName._id;
+      }
+
+      const parentDoc = await Folder.findOne({ _id: effectiveParentId, owner: req.user._id });
       if (!parentDoc) {
         return res.status(404).json({ message: 'Parent folder not found' });
       }
@@ -28,7 +41,7 @@ export const createFolder = async (req, res, next) => {
     const existing = await Folder.findOne({
       name: name.trim(),
       owner: req.user._id,
-      parent: parentFolder || null,
+      parent: effectiveParentId || null,
     });
 
     if (existing) {
@@ -37,11 +50,11 @@ export const createFolder = async (req, res, next) => {
         .json({ message: 'Folder with this name already exists in this location' });
     }
 
-    const path = await buildPath(name.trim(), parentFolder);
+    const path = await buildPath(name.trim(), effectiveParentId);
     const folder = await Folder.create({
       name: name.trim(),
       owner: req.user._id,
-      parent: parentFolder || null,
+      parent: effectiveParentId || null,
       path,
     });
 

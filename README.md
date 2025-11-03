@@ -3,35 +3,43 @@
 A modern React + Vite front-end for the Cloud Storage Assignment.
 This project follows industry-level folder structure, uses Redux Toolkit for state management, Axios for API calls, and Tailwind CSS for styling.
 
+https://drive-ai-seven.vercel.app/
+
 ## Features
-* Authentication (Login & Signup with Redux)
-* Folder Management (Create & List Folders)
-* Image Management (Upload & Search Images)
-* Responsive UI with Tailwind CSS
-* Modern project structure with feature-based organization
-* Fast build and dev server using Vite
+
+- Authentication (Login & Signup with Redux)
+- Folder Management (Create & List Folders)
+- Image Management (Upload & Search Images)
+- Responsive UI with Tailwind CSS
+- Modern project structure with feature-based organization
+- Fast build and dev server using Vite
 
 ## How It Works
 
 ## Auth
+
 LoginForm.jsx and SignupForm.jsx handle forms
 authSlice.js manages auth state (token, user)
 authService.js communicates with backend APIs
 
 ## Folders
+
 CreateFolder.jsx creates new folders
 FolderList.jsx lists all folders
 folderSlice.js manages folder state
 
 ## Images
+
 UploadImage.jsx uploads images
 SearchImages.jsx filters/searches images
 imageSlice.js manages image state
 
 ## Global State
+
 Configured inside redux/store.js using Redux Toolkit
 
 ## API Calls
+
 Centralized in services/ using Axios
 axiosInstance.js manages baseURL + interceptors
 
@@ -51,7 +59,6 @@ Separation of services (API) and state (Redux slices)
 Centralized axiosInstance for cleaner API calls
 Clean UI with Tailwind
 Easy-to-understand auth, folders, images feature separation
-
 
 ## FrontEnd folder Stracture
 
@@ -109,30 +116,22 @@ FrontEnd/
 │ └── utils/ # Helper functions
 │ └── axiosInstance.js
 
-
-
-
 🔄 Data Flow
 User Action (Create Folder/Upload Image)
-    ↓
+↓
 Component dispatches action
-    ↓
+↓
 Redux Thunk makes API call
-    ↓
+↓
 Success: Update Redux state
-    ↓
+↓
 Component callback fires (onFolderCreated/onImageUploaded)
-    ↓
+↓
 Fetch updated data from server
-    ↓
+↓
 useMemo hooks recompute (recentFolders, recentImages, activity)
-    ↓
+↓
 UI updates automatically with fresh data
-
-
-
-
-
 
 # Backend – FileHive
 
@@ -150,6 +149,7 @@ Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
 ## 🛠️ Features
 
 - **User Authentication**: Signup, Login with JWT-based sessions
+- **OTP System**: Email verification with One-Time Password
 - **Folder Management**: Create nested folders (like Google Drive)
 - **Image Upload**: Upload images to Cloudinary with Multer
 - **User Isolation**: Users can only access their own folders & images
@@ -157,15 +157,57 @@ Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
 - **Secure Routes**: Protected with authentication middleware
 - **Error Handling**: Centralized error handling with middleware
 - **Database**: MongoDB integration with Mongoose
+- **Caching**: Redis integration for improved performance
 
 ## 🏗️ Tech Stack
 
 - **Runtime**: Node.js + Express.js
 - **Database**: MongoDB + Mongoose
+- **Caching**: Redis
+- **Email Service**: Resend for OTP delivery
 - **File Storage**: Cloudinary (for image storage)
 - **Authentication**: JWT (JSON Web Tokens)
 - **File Handling**: Multer (multipart/form-data)
 - **Utilities**: dotenv, cors, morgan, cookie-parser, streamifier
+
+## 📁 Project Structure
+
+```
+Backend/
+│
+├── server.js              # Entry point
+├── .env                   # Environment variables
+├── package.json           # Dependencies
+├── FileHive_postman_collection.json  # API collection for Postman
+└── src/
+    ├── app.js            # Express app configuration
+    ├── testRedis.js      # Redis testing utilities
+    ├── config/
+    │   ├── db.js        # MongoDB connection
+    │   └── redis.js     # Redis configuration
+    ├── controllers/
+    │   ├── auth.controller.js    # User authentication logic
+    │   ├── folder.controller.js  # Folder CRUD operations
+    │   ├── image.controller.js   # Image upload/management
+    │   └── otp.controller.js     # OTP verification logic
+    ├── middleware/
+    │   ├── auth.middleware.js    # JWT verification
+    │   └── error.middleware.js   # Global error handling
+    ├── models/
+    │   ├── user.model.js         # User schema
+    │   ├── folder.model.js       # Folder schema
+    │   ├── image.model.js        # Image schema
+    │   └── otp.model.js          # OTP schema
+    ├── routes/
+    │   ├── auth.routes.js        # Authentication endpoints
+    │   ├── folder.routes.js      # Folder endpoints
+    │   ├── image.routes.js       # Image endpoints
+    │   └── otp.routes.js         # OTP endpoints
+    └── utils/
+        ├── cloudinary.js         # Cloudinary configuration
+        ├── generateToken.js      # JWT token generation
+        └── sendEmail.js          # Email service configuration
+```
 
 ## 📡 API Routes
 
@@ -239,40 +281,6 @@ FRONTEND_URL=https://your-frontend-domain.com
    ```bash
    npm start
    ```
-
-## 📁 Project Structure
-
-```
-Backend/
-│
-├── server.js              # Entry point
-├── .env                   # Environment variables
-├── package.json           # Dependencies
-└── README.md             # This file
-│
-└── src/
-    ├── app.js            # Express app configuration
-    ├── config/
-    │   └── db.js        # MongoDB connection
-    ├── controllers/
-    │   ├── auth.controller.js    # User authentication logic
-    │   ├── folder.controller.js  # Folder CRUD operations
-    │   └── image.controller.js   # Image upload/management
-    ├── middleware/
-    │   ├── auth.middleware.js    # JWT verification
-    │   └── error.middleware.js   # Global error handling
-    ├── models/
-    │   ├── user.model.js         # User schema
-    │   ├── folder.model.js       # Folder schema
-    │   └── image.model.js        # Image schema
-    ├── routes/
-    │   ├── auth.routes.js        # Authentication endpoints
-    │   ├── folder.routes.js      # Folder endpoints
-    │   └── image.routes.js       # Image endpoints
-    └── utils/
-        ├── cloudinary.js         # Cloudinary configuration
-        └── generateToken.js      # JWT token generation
-```
 
 ## 🔒 Security Features
 
