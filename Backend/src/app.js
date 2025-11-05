@@ -20,11 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Allow both local and deployed frontends - filter out undefined FRONTEND_URL
-const allowedOrigins = [
-  'http://localhost:5173', // Local dev frontend
-  process.env.FRONTEND_URL, // Vercel frontend from env (set in Render dashboard)
-].filter(Boolean); // Removes undefined/empty values
+// Allow both local and deployed frontends and docker frontend
+const allowedOrigins = ['http://localhost:5173', process.env.FRONTEND_URL].filter(Boolean); // Removes undefined/empty values
 
 // Log for debugging (check Render logs)
 console.log('Allowed origins:', allowedOrigins);
@@ -47,8 +44,8 @@ app.use(
 
 app.get('/', (req, res) => res.json({ message: 'API running' }));
 app.get('/api/health', (req, res) => {
-res.status(200).json({status:'ok',  message: 'backend ' });
-})
+  res.status(200).json({ status: 'ok', message: 'backend ' });
+});
 
 app.use('/api/auth', authRoutes);
 app.use('/api/folders', folderRoutes);

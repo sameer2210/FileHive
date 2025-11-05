@@ -3,7 +3,12 @@
 A modern React + Vite front-end for the Cloud Storage Assignment.
 This project follows industry-level folder structure, uses Redux Toolkit for state management, Axios for API calls, and Tailwind CSS for styling.
 
-https://drive-ai-seven.vercel.app/
+## Deployment
+
+**Deploy URL:** https://filehive-drive.vercel.app
+
+**Backend Base URL:** https://filehive-md6d.onrender.com/api
+
 
 ## Features
 
@@ -61,6 +66,7 @@ Clean UI with Tailwind
 Easy-to-understand auth, folders, images feature separation
 
 ## FrontEnd folder Stracture
+```
 
 FrontEnd/
 │── index.html
@@ -116,6 +122,7 @@ FrontEnd/
 │ └── utils/ # Helper functions
 │ └── axiosInstance.js
 
+```
 🔄 Data Flow
 User Action (Create Folder/Upload Image)
 ↓
@@ -137,14 +144,11 @@ UI updates automatically with fresh data
 
 Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
 
-## Deployment
-
-**Backend Base URL:** https://drive-ai.onrender.com/
 
 **Important:** Frontend should use the full URL including `/api` prefix:
 
-- Correct: `https://drive-ai.onrender.com/api/auth/login`
 - Wrong: `https://drive-ai.onrender.com/auth/login`
+- Correct: `https://drive-ai.onrender.com/api/auth/login`
 
 ## 🛠️ Features
 
@@ -209,31 +213,6 @@ Backend/
         └── sendEmail.js          # Email service configuration
 ```
 
-## 📡 API Routes
-
-### 🔑 Authentication
-
-```
-POST /api/auth/signup → Register a new user
-POST /api/auth/login → Login user
-```
-
-### 📁 Folders
-
-```
-POST /api/folders → Create a folder (nested supported)
-GET /api/folders → Get all folders of logged-in user
-DELETE /api/folders/:id → Delete a folder
-```
-
-### 🖼️ Images
-
-```
-POST /api/images/upload → Upload an image to Cloudinary
-GET /api/images/search?query= → Search images by name
-DELETE /api/images/:id → Delete an image
-```
-
 ## ⚙️ Environment Variables
 
 Create a `.env` file in the root directory with:
@@ -251,14 +230,32 @@ CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 # Server
-PORT=5000
+PORT=5050
 NODE_ENV=development
 
-# Frontend URL (for CORS)
-FRONTEND_URL=https://your-frontend-domain.com
+
 ```
 
 ## Quick Start
+
+## Docker
+
+1. Docker build
+
+docker network create filehive-network
+docker compose up --build
+
+2. start in browser
+
+http://localhost:5173
+
+
+3. if want to stop Docker
+
+docker compose down
+
+
+### or if local/Normal
 
 1. **Install Dependencies**
 

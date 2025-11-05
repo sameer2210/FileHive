@@ -9,7 +9,7 @@ services:
     env_file:
       - ./backend/.env
     networks:
-      - mern-network
+      - filehive-network
     restart: unless-stopped
 
   frontend:
@@ -20,9 +20,9 @@ services:
     depends_on:
       - backend
     networks:
-      - mern-network
+      - filehive-network
     restart: unless-stopped
 
 networks:
-  mern-network:
+  filehive-network:
     external: true
