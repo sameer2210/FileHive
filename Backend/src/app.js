@@ -42,9 +42,19 @@ app.use(
   })
 );
 
+app.options("*", cors());    // Fix preflight instantly
+
 app.get('/', (req, res) => res.json({ message: 'API running' }));
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'ok', message: 'backend ' });
+app.get('/api/health', async (req, res) => {
+  try {
+    res.status(200).json({
+      status: 'ok',
+      message: 'backend healthy',
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    res.status(503).json({ status: 'error', message: 'Service issue' });
+  }
 });
 
 app.use('/api/auth', authRoutes);
