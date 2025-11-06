@@ -42,7 +42,7 @@ app.use(
   })
 );
 
-app.options("*", cors());    // Fix preflight instantly
+// app.options('*', cors()); // Fix preflight instantly
 
 app.get('/', (req, res) => res.json({ message: 'API running' }));
 app.get('/api/health', async (req, res) => {

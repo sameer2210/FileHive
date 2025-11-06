@@ -1,20 +1,17 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import './src/config/redis.js';
 import http from 'http';
 import app from './src/app.js';
 import connectDB from './src/config/db.js';
-import './src/config/redis.js';
 
 const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);
 
 const startServer = async () => {
   try {
-    await Promise.race([
-      connectDB(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)), // 10max
-    ]);
+    await connectDB();
     server.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
