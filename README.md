@@ -1,4 +1,4 @@
-📂 FileHive – Cloud Storage
+### 📂 FileHive – Cloud Storage
 
 A modern React + Vite front-end for the Cloud Storage Assignment.
 This project follows industry-level folder structure, uses Redux Toolkit for state management, Axios for API calls, and Tailwind CSS for styling.
@@ -65,12 +65,37 @@ Centralized axiosInstance for cleaner API calls
 Clean UI with Tailwind
 Easy-to-understand auth, folders, images feature separation
 
+
+🔄 Data Flow
+User Action (Create Folder/Upload Image)
+↓
+Component dispatches action
+↓
+Redux Thunk makes API call
+↓
+Success: Update Redux state
+↓
+Component callback fires (onFolderCreated/onImageUploaded)
+↓
+Fetch updated data from server
+↓
+useMemo hooks recompute (recentFolders, recentImages, activity)
+↓
+UI updates automatically with fresh data
+
+
+
 ## FrontEnd folder Stracture
+docker-compose.yml
+README.md
 ```
 
 FrontEnd/
 │── index.html
 │── package.json
+│── dockerfile
+│── .dockerignore
+│── eslint.config.js
 │── vite.config.js
 │── src/
 │ │── main.jsx
@@ -122,67 +147,15 @@ FrontEnd/
 │ └── utils/ # Helper functions
 │ └── axiosInstance.js
 
-```
-🔄 Data Flow
-User Action (Create Folder/Upload Image)
-↓
-Component dispatches action
-↓
-Redux Thunk makes API call
-↓
-Success: Update Redux state
-↓
-Component callback fires (onFolderCreated/onImageUploaded)
-↓
-Fetch updated data from server
-↓
-useMemo hooks recompute (recentFolders, recentImages, activity)
-↓
-UI updates automatically with fresh data
-
-# Backend – FileHive
-
-Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
-
-
-**Important:** Frontend should use the full URL including `/api` prefix:
-
-- Wrong: `https://drive-ai.onrender.com/auth/login`
-- Correct: `https://drive-ai.onrender.com/api/auth/login`
-
-## 🛠️ Features
-
-- **User Authentication**: Signup, Login with JWT-based sessions
-- **OTP System**: Email verification with One-Time Password
-- **Folder Management**: Create nested folders (like Google Drive)
-- **Image Upload**: Upload images to Cloudinary with Multer
-- **User Isolation**: Users can only access their own folders & images
-- **Image Search**: Search images by name
-- **Secure Routes**: Protected with authentication middleware
-- **Error Handling**: Centralized error handling with middleware
-- **Database**: MongoDB integration with Mongoose
-- **Caching**: Redis integration for improved performance
-
-## 🏗️ Tech Stack
-
-- **Runtime**: Node.js + Express.js
-- **Database**: MongoDB + Mongoose
-- **Caching**: Redis
-- **Email Service**: Resend for OTP delivery
-- **File Storage**: Cloudinary (for image storage)
-- **Authentication**: JWT (JSON Web Tokens)
-- **File Handling**: Multer (multipart/form-data)
-- **Utilities**: dotenv, cors, morgan, cookie-parser, streamifier
-
-## 📁 Project Structure
-
-```
 Backend/
 │
 ├── server.js              # Entry point
 ├── .env                   # Environment variables
 ├── package.json           # Dependencies
 ├── FileHive_postman_collection.json  # API collection for Postman
+│── dockerfile
+│── .dockerignore
+│── .gitignore
 └── src/
     ├── app.js            # Express app configuration
     ├── testRedis.js      # Redis testing utilities
@@ -213,6 +186,39 @@ Backend/
         └── sendEmail.js          # Email service configuration
 ```
 
+# Backend – FileHive
+
+Built using Node.js, Express, MongoDB, Cloudinary, JWT Authentication.
+
+**Important:** Frontend should use the full URL including `/api` prefix:
+
+- Wrong: `https://drive-ai.onrender.com/auth/login`
+- Correct: `https://drive-ai.onrender.com/api/auth/login`
+
+## 🛠️ Features
+
+- **User Authentication**: Signup, Login with JWT-based sessions
+- **OTP System**: Email verification with One-Time Password
+- **Folder Management**: Create nested folders (like Google Drive)
+- **Image Upload**: Upload images to Cloudinary with Multer
+- **User Isolation**: Users can only access their own folders & images
+- **Image Search**: Search images by name
+- **Secure Routes**: Protected with authentication middleware
+- **Error Handling**: Centralized error handling with middleware
+- **Database**: MongoDB integration with Mongoose
+- **Caching**: Redis integration for improved performance
+
+## 🏗️ Tech Stack
+
+- **Runtime**: Node.js + Express.js
+- **Database**: MongoDB + Mongoose
+- **Caching**: Redis
+- **Email Service**: Resend for OTP delivery
+- **File Storage**: Cloudinary (for image storage)
+- **Authentication**: JWT (JSON Web Tokens)
+- **File Handling**: Multer (multipart/form-data)
+- **Utilities**: dotenv, cors, morgan, cookie-parser, streamifier
+
 ## ⚙️ Environment Variables
 
 Create a `.env` file in the root directory with:
@@ -236,9 +242,8 @@ NODE_ENV=development
 
 ```
 
-## Quick Start
+## Docker Quick Start
 
-## Docker
 
 1. Docker build
 

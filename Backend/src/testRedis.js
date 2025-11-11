@@ -1,4 +1,4 @@
-// testRedis.js
+// Backend/Src/utils/testRedis.js
 import client from './config/redis.js';
 
 const test = async () => {
