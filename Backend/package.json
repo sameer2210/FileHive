@@ -5,10 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-
-  "dev": "node --env-file=.env server.js",
-  "start": "nodemon --env-file=.env server.js"
-
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
